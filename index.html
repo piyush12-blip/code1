@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Shopify Parallax</title>
+    <style>
+        /* --- 1. BASE STYLES --- */
+        body {
+            margin: 0;
+            background-color: #050508;
+            overflow-x: hidden;
+            font-family: sans-serif;
+            color: white;
+        }
+
+        .spacer {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            opacity: 0.5;
+        }
+
+        /* --- 2. THE STAGE --- */
+        .scene {
+            height: 100vh;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- 3. BACKGROUND LAYERS --- */
+        .bg-layer {
+            position: absolute;
+            top: -10%; 
+            left: -10%;
+            width: 120%; 
+            height: 120%;
+            object-fit: cover;
+        }
+        .bg-clouds { z-index: 1; }
+        .trees { z-index: 2; }
+
+        /* --- 4. CHARACTER CONTAINERS --- */
+        .char-container {
+            position: absolute;
+            bottom: 5%; 
+            width: 40vw; 
+            height: 80vh;
+            z-index: 10;
+        }
+        .char-left { left: 0%; }
+        .char-right { right: 0%; }
+
+        /* --- 5. THE PUPPET PARTS --- */
+        .part {
+            position: absolute;
+            object-fit: contain;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* THE LEFT GIRL RIG */
+        .girl-leg { 
+            z-index: 9; 
+            transform-origin: 50% 90%; /* Pivots near the ankle/foot */
+        }
+        .girl-arm-right { 
+            z-index: 10; /* Put her back arm behind her body */
+            transform-origin: 40% 30%; /* Pivot near her back shoulder */
+        }
+        .girl-body { 
+            z-index: 11; 
+            transform-origin: 50% 80%; /* Pivots near her hips */
+        }
+        .girl-arm-left { 
+            z-index: 12; /* Reaching arm in front */
+            transform-origin: 65% 30%; /* Pivot near her front shoulder */
+        }
+
+        /* THE RIGHT GUY RIG */
+        .guy-body { 
+            z-index: 11; 
+            transform-origin: 50% 80%; /* Pivots near his hips */
+        }
+        .guy-arm { 
+            z-index: 12; 
+            transform-origin: 35% 30%; /* Pivot near his left shoulder */
+        }
+    </style>
+</head>
+<body>
+
+    <div class="spacer">Scroll Down To Begin</div>
+
+    <div class="scene" id="mainScene">
+        
+        <img src="images/bg-clouds.jpg" class="bg-layer bg-clouds">
+        <img src="images/trees.png" class="bg-layer trees">
+
+        <div class="char-container char-left">
+            <img src="images/girl-arm-right.png" class="part girl-arm-right">
+            <img src="images/girl-leg.png" class="part girl-leg">
+            <img src="images/girl-body.png" class="part girl-body">
+            <img src="images/girl-arm-left.png" class="part girl-arm-left">
+        </div>
+
+        <div class="char-container char-right">
+            <img src="images/guy-body.png" class="part guy-body">
+            <img src="images/guy-arm.png" class="part guy-arm">
+        </div>
+
+    </div>
+
+    <div class="spacer">Keep Scrolling</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        let tl = gsap.timeline({
+            scrollTrigger: {
+                trigger: "#mainScene",
+                start: "top top",
+                end: "+=200%",
+                scrub: 1, 
+                pin: true 
+            }
+        });
+
+        // 1. Environment Parallax
+        tl.to(".bg-clouds", { x: "-5%", y: "5%", scale: 1.05 }, 0)
+          .to(".trees", { y: "10%", scale: 1.1 }, 0);
+
+        // 2. Glide Characters Together
+        tl.to(".char-left", { x: "15vw" }, 0)
+          .to(".char-right", { x: "-15vw" }, 0);
+
+        // 3. The Left Girl's Complex Movement
+        tl.to(".girl-leg", { rotation: -5 }, 0)        // Her leg shifts
+          .to(".girl-body", { rotation: 8 }, 0)        // She leans in
+          .to(".girl-arm-right", { rotation: 15 }, 0)  // Her back arm swings for balance
+          .to(".girl-arm-left", { rotation: -40 }, 0); // Her reaching arm stretches up to him
+
+        // 4. The Right Guy's Movement
+        tl.to(".guy-body", { rotation: -8 }, 0)        // He leans in
+          .to(".guy-arm", { rotation: 40 }, 0);        // His arm stretches up to her
+
+    </script>
+</body>
+</html>

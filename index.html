@@ -43,55 +43,61 @@
         .bg-clouds { z-index: 1; }
         .trees { z-index: 2; }
 
-        /* --- 4. CHARACTER CONTAINERS --- */
+        /* --- 4. CHARACTER CONTAINERS (SUPERSIZED) --- */
         .char-container {
             position: absolute;
-            bottom: 5%; 
-            width: 40vw; 
-            height: 80vh;
+            top: 15vh; /* Moved to center screen */
+            width: 55vw; /* MASSIVELY BIGGER! Was 40vw */
+            height: 60vh;
             z-index: 10;
         }
-        .char-left { left: 0%; }
-        .char-right { right: 0%; }
+        /* Start them a bit further off-screen so the slide-in is dramatic */
+        .char-left { left: -10vw; } 
+        .char-right { right: -10vw; }
 
-        /* --- 5. THE PUPPET PARTS --- */
+        /* --- 5. THE PUPPET PARTS (The Puzzle Fix!) --- */
         .part {
             position: absolute;
-            object-fit: contain;
-            width: 100%;
-            height: 100%;
+            height: auto; /* Lets images keep their natural shape */
         }
 
         /* THE LEFT GIRL RIG */
         .girl-left-leg { 
+            top: 45%; right: 5%; width: 55%;
             z-index: 8; 
-            transform-origin: 50% 90%; 
+            transform-origin: 50% 10%; 
         }
         .girl-right-leg { 
+            top: 45%; right: -5%; width: 55%;
             z-index: 9; 
-            transform-origin: 50% 90%; 
+            transform-origin: 50% 10%; 
         }
         .girl-body { 
+            top: 0; right: 15%; width: 75%;
             z-index: 11; 
             transform-origin: 50% 80%; 
         }
         .girl-arm-left { 
+            top: 15%; right: 75%; width: 60%;
             z-index: 12; 
-            transform-origin: 65% 30%; 
+            transform-origin: 85% 45%; /* Shoulder joint */
         }
 
         /* THE RIGHT GUY RIG */
         .guy-leg { 
+            top: 40%; left: 0%; width: 60%;
             z-index: 9; 
-            transform-origin: 50% 90%; 
+            transform-origin: 50% 10%; 
         }
         .guy-body { 
+            top: 0; left: 15%; width: 70%;
             z-index: 11; 
             transform-origin: 50% 80%; 
         }
         .guy-arm { 
+            top: 15%; left: 70%; width: 60%;
             z-index: 12; 
-            transform-origin: 35% 30%; 
+            transform-origin: 15% 45%; /* Shoulder joint */
         }
     </style>
 </head>
@@ -141,9 +147,9 @@
         tl.to(".bg-clouds", { x: "-5%", y: "5%", scale: 1.05 }, 0)
           .to(".trees", { y: "10%", scale: 1.1 }, 0);
 
-        // 2. Glide Characters Together
-        tl.to(".char-left", { x: "15vw" }, 0)
-          .to(".char-right", { x: "-15vw" }, 0);
+        // 2. Glide Characters Together (Increased distance since they are bigger)
+        tl.to(".char-left", { x: "22vw" }, 0)
+          .to(".char-right", { x: "-22vw" }, 0);
 
         // 3. The Left Girl's Complex Movement
         tl.to(".girl-left-leg", { rotation: -5 }, 0)        

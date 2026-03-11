@@ -63,13 +63,13 @@
         }
 
         /* THE LEFT GIRL RIG */
-        .girl-leg { 
-            z-index: 9; 
+        .girl-left-leg { 
+            z-index: 8; 
             transform-origin: 50% 90%; 
         }
-        .girl-arm-right { 
-            z-index: 10; 
-            transform-origin: 40% 30%; 
+        .girl-right-leg { 
+            z-index: 9; 
+            transform-origin: 50% 90%; 
         }
         .girl-body { 
             z-index: 11; 
@@ -80,16 +80,16 @@
             transform-origin: 65% 30%; 
         }
 
-        /* THE RIGHT MEN RIG */
-        .men-leg { 
+        /* THE RIGHT GUY RIG */
+        .guy-leg { 
             z-index: 9; 
             transform-origin: 50% 90%; 
         }
-        .men-body { 
+        .guy-body { 
             z-index: 11; 
             transform-origin: 50% 80%; 
         }
-        .men-arm { 
+        .guy-arm { 
             z-index: 12; 
             transform-origin: 35% 30%; 
         }
@@ -102,19 +102,19 @@
     <div class="scene" id="mainScene">
         
         <img src="bg-clouds.jpg" class="bg-layer bg-clouds">
-        <img src="trees.png" class="bg-layer trees">
+        <img src="trees.png" class="bg-layer trees"> 
 
         <div class="char-container char-left">
-            <img src="girl-arm-right.png" class="part girl-arm-right">
-            <img src="girl-leg.png" class="part girl-leg">
+            <img src="girl-right-leg.png" class="part girl-right-leg">
+            <img src="girl-left-leg.png" class="part girl-left-leg">
             <img src="girl-body.png" class="part girl-body">
             <img src="girl-arm-left.png" class="part girl-arm-left">
         </div>
 
         <div class="char-container char-right">
-            <img src="men-leg.png" class="part men-leg">
-            <img src="men-body.png" class="part men-body">
-            <img src="men-arm.png" class="part men-arm">
+            <img src="guy-leg.png" class="part guy-leg">
+            <img src="guy-body.png" class="part guy-body">
+            <img src="guy-arm.png" class="part guy-arm">
         </div>
 
     </div>
@@ -146,15 +146,15 @@
           .to(".char-right", { x: "-15vw" }, 0);
 
         // 3. The Left Girl's Complex Movement
-        tl.to(".girl-leg", { rotation: -5 }, 0)        
+        tl.to(".girl-left-leg", { rotation: -5 }, 0)        
+          .to(".girl-right-leg", { rotation: 3 }, 0)        
           .to(".girl-body", { rotation: 8 }, 0)        
-          .to(".girl-arm-right", { rotation: 15 }, 0)  
           .to(".girl-arm-left", { rotation: -40 }, 0); 
 
-        // 4. The Right Men's Movement
-        tl.to(".men-leg", { rotation: 5 }, 0)          // His leg shifts
-          .to(".men-body", { rotation: -8 }, 0)        
-          .to(".men-arm", { rotation: 40 }, 0);        
+        // 4. The Right Guy's Movement
+        tl.to(".guy-leg", { rotation: 5 }, 0)          
+          .to(".guy-body", { rotation: -8 }, 0)        
+          .to(".guy-arm", { rotation: 40 }, 0);        
 
     </script>
 </body>

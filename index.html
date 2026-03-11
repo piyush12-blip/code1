@@ -23,82 +23,53 @@
             opacity: 0.5;
         }
 
-        /* --- 2. THE STAGE --- */
+        /* --- 2. THE STAGE (SCALED UP TO LOOK MASSIVE) --- */
         .scene {
             height: 100vh;
             width: 100%;
             position: relative;
             overflow: hidden;
+            transform: scale(1.2); /* This zooms everything in to make them huge! */
         }
 
         /* --- 3. BACKGROUND LAYERS --- */
         .bg-layer {
             position: absolute;
-            top: -10%; 
-            left: -10%;
-            width: 120%; 
-            height: 120%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             object-fit: cover;
         }
         .bg-clouds { z-index: 1; }
         .trees { z-index: 2; }
 
-        /* --- 4. CHARACTER CONTAINERS (SUPERSIZED) --- */
-        .char-container {
+        /* --- 4. CHARACTER GROUPS --- */
+        /* Instead of boxes, they are now full-screen overlays */
+        .character-group {
             position: absolute;
-            top: 15vh; /* Moved to center screen */
-            width: 55vw; /* MASSIVELY BIGGER! Was 40vw */
-            height: 60vh;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 10;
         }
-        /* Start them a bit further off-screen so the slide-in is dramatic */
-        .char-left { left: -10vw; } 
-        .char-right { right: -10vw; }
 
-        /* --- 5. THE PUPPET PARTS (The Puzzle Fix!) --- */
+        /* --- 5. THE PUPPET PARTS --- */
         .part {
             position: absolute;
-            height: auto; /* Lets images keep their natural shape */
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: cover; /* Perfectly stretches your 1920x1080 canvas to the screen */
         }
 
         /* THE LEFT GIRL RIG */
-        .girl-left-leg { 
-            top: 45%; right: 5%; width: 55%;
-            z-index: 8; 
-            transform-origin: 50% 10%; 
-        }
-        .girl-right-leg { 
-            top: 45%; right: -5%; width: 55%;
-            z-index: 9; 
-            transform-origin: 50% 10%; 
-        }
-        .girl-body { 
-            top: 0; right: 15%; width: 75%;
-            z-index: 11; 
-            transform-origin: 50% 80%; 
-        }
-        .girl-arm-left { 
-            top: 15%; right: 75%; width: 60%;
-            z-index: 12; 
-            transform-origin: 85% 45%; /* Shoulder joint */
-        }
+        /* Pivot points are now based on the FULL SCREEN. (25% from left, 45% from top) */
+        .girl-left-leg { z-index: 8; transform-origin: 25% 65%; }
+        .girl-right-leg { z-index: 9; transform-origin: 25% 65%; }
+        .girl-body { z-index: 11; transform-origin: 25% 60%; }
+        .girl-arm-left { z-index: 12; transform-origin: 22% 45%; } 
 
         /* THE RIGHT GUY RIG */
-        .guy-leg { 
-            top: 40%; left: 0%; width: 60%;
-            z-index: 9; 
-            transform-origin: 50% 10%; 
-        }
-        .guy-body { 
-            top: 0; left: 15%; width: 70%;
-            z-index: 11; 
-            transform-origin: 50% 80%; 
-        }
-        .guy-arm { 
-            top: 15%; left: 70%; width: 60%;
-            z-index: 12; 
-            transform-origin: 15% 45%; /* Shoulder joint */
-        }
+        /* Pivot points: (75% from left, 45% from top) */
+        .guy-body { z-index: 11; transform-origin: 75% 60%; }
+        .guy-arm-right { z-index: 12; transform-origin: 76% 45%; }
     </style>
 </head>
 <body>
@@ -110,17 +81,16 @@
         <img src="bg-clouds.jpg" class="bg-layer bg-clouds">
         <img src="trees.png" class="bg-layer trees"> 
 
-        <div class="char-container char-left">
+        <div class="character-group girl-group">
             <img src="girl-right-leg.png" class="part girl-right-leg">
             <img src="girl-left-leg.png" class="part girl-left-leg">
             <img src="girl-body.png" class="part girl-body">
             <img src="girl-arm-left.png" class="part girl-arm-left">
         </div>
 
-        <div class="char-container char-right">
-            <img src="guy-leg.png" class="part guy-leg">
+        <div class="character-group guy-group">
             <img src="guy-body.png" class="part guy-body">
-            <img src="guy-arm.png" class="part guy-arm">
+            <img src="guy-arm-right.png" class="part guy-arm-right">
         </div>
 
     </div>
@@ -144,23 +114,22 @@
         });
 
         // 1. Environment Parallax
-        tl.to(".bg-clouds", { x: "-5%", y: "5%", scale: 1.05 }, 0)
+        tl.to(".bg-clouds", { y: "5%", scale: 1.05 }, 0)
           .to(".trees", { y: "10%", scale: 1.1 }, 0);
 
-        // 2. Glide Characters Together (Increased distance since they are bigger)
-        tl.to(".char-left", { x: "22vw" }, 0)
-          .to(".char-right", { x: "-22vw" }, 0);
+        // 2. Glide Full Canvases Together
+        tl.to(".girl-group", { x: "10vw" }, 0)
+          .to(".guy-group", { x: "-10vw" }, 0);
 
-        // 3. The Left Girl's Complex Movement
+        // 3. The Left Girl's Movement
         tl.to(".girl-left-leg", { rotation: -5 }, 0)        
           .to(".girl-right-leg", { rotation: 3 }, 0)        
-          .to(".girl-body", { rotation: 8 }, 0)        
-          .to(".girl-arm-left", { rotation: -40 }, 0); 
+          .to(".girl-body", { rotation: 4 }, 0)        
+          .to(".girl-arm-left", { rotation: -35 }, 0); 
 
         // 4. The Right Guy's Movement
-        tl.to(".guy-leg", { rotation: 5 }, 0)          
-          .to(".guy-body", { rotation: -8 }, 0)        
-          .to(".guy-arm", { rotation: 40 }, 0);        
+        tl.to(".guy-body", { rotation: -4 }, 0)        
+          .to(".guy-arm-right", { rotation: 35 }, 0);        
 
     </script>
 </body>
